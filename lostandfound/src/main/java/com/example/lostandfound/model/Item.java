@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Locale.Category;
 import java.util.Objects;
 
+import com.example.lostandfound.model.enums.Location;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

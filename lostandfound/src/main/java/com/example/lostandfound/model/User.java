@@ -106,4 +106,16 @@ public class User {
     public int hashCode() {
         return Objects.hash(userId, name, password, email, studentId, role, meritPoints);
     }
+
+    @Override
+public String toString() {
+    return "User{" +
+            "userId=" + userId +
+            ", name='" + name + '\'' +
+            ", email='" + email + '\'' +
+            ", studentId='" + studentId + '\'' +
+            ", role='" + role + '\'' +
+            ", meritPoints=" + meritPoints +
+            '}';
+}
 }
