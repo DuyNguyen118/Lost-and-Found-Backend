@@ -1,12 +1,13 @@
 package com.example.lostandfound.service.impl;
 
-import com.example.lostandfound.model.User;
-import com.example.lostandfound.repository.UserRepository;
-import com.example.lostandfound.service.UserService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.example.lostandfound.model.User;
+import com.example.lostandfound.repository.UserRepository;
+import com.example.lostandfound.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,12 +21,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Long id) {
+    public User getUserById(Integer id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Override
-    public User updateUser(Long id, User user) {
+    public User updateUser(Integer id, User user) {
         User existingUser = getUserById(id);
         existingUser.setName(user.getName());
         existingUser.setEmail(user.getEmail());
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }
 

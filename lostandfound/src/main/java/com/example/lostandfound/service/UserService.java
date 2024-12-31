@@ -1,13 +1,13 @@
 package com.example.lostandfound.service;
 
-import com.example.lostandfound.model.User;
-
 import java.util.List;
+
+import com.example.lostandfound.model.User;
 
 public interface UserService {
     User registerUser(User user);
-    User getUserById(Long id);
-    User updateUser(Long id, User user);
-    void deleteUser(Long id);
+    User getUserById(Integer id);
+    User updateUser(Integer id, User user);
+    void deleteUser(Integer id);
     List<User> getAllUsers();
 }
