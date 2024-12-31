@@ -32,16 +32,16 @@ public class Match {
         return lostItemId;
     }
 
-    public void setLostItemId(int lostItemId) {
-        this.lostItemId = lostItemId;
+    public void setLostItemId(int  lostItemId2) {
+        this.lostItemId = lostItemId2;
     }
 
     public int getFoundItemId() {
         return foundItemId;
     }
 
-    public void setFoundItemId(int foundItemId) {
-        this.foundItemId = foundItemId;
+    public void setFoundItemId(int foundItemId2) {
+        this.foundItemId = foundItemId2;
     }
 
     public Date getMatchDate() {
