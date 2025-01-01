@@ -8,19 +8,28 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.lostandfound.model.Match;
-import com.example.lostandfound.model.Report;
 
 @Repository
 public interface MatchRepository extends JpaRepository<Match, Integer> {
-    // Find all reports for a specific item
-    List<Report> findByItemId(Long itemId);
 
-    // Find reports by report type
-    List<Report> findByReportType(String reportType);
+    // Find all matches involving a specific lost item
+    @Query("SELECT m FROM Match m WHERE m.lostItemId = :lostItemId")
+    List<Match> findByLostItemId(@Param("lostItemId") Long lostItemId);
 
-    // Find reports created by a specific user
-    @Query("SELECT r FROM Report r WHERE r.userId = :userId")
-    List<Report> findReportsByUser(@Param("userId") Long userId);
+    // Find all matches involving a specific found item
+    @Query("SELECT m FROM Match m WHERE m.foundItemId = :foundItemId")
+    List<Match> findByFoundItemId(@Param("foundItemId") Long foundItemId);
 
-    // Additional custom queries can be added here
-    }
+    // Find matches by date range
+    @Query("SELECT m FROM Match m WHERE m.matchDate BETWEEN :startDate AND :endDate")
+    List<Match> findMatchesByDateRange(@Param("startDate") java.util.Date startDate,
+                                       @Param("endDate") java.util.Date endDate);
+
+    // Find matches by category similarity
+    @Query("SELECT m FROM Match m WHERE m.lostItem.category = :category OR m.foundItem.category = :category")
+    List<Match> findByCategory(@Param("category") String category);
+
+    // Custom query for suggesting matches based on location
+    @Query("SELECT m FROM Match m WHERE m.lostItem.location = m.foundItem.location AND m.lostItemId <> m.foundItemId")
+    List<Match> findMatchesByLocation();
+}

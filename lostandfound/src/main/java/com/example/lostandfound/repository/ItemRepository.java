@@ -13,7 +13,6 @@ import com.example.lostandfound.model.enums.Location;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-    // Existing queries
     List<Item> findByCategory(String category);
     
     List<Item> findByStatus(String status);
