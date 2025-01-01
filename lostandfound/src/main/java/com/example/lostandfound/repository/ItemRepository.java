@@ -12,23 +12,27 @@ import com.example.lostandfound.model.Item;
 import com.example.lostandfound.model.enums.Location;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Integer> {
+public interface ItemRepository extends JpaRepository<Item, Long> {
+    // Existing queries
     List<Item> findByCategory(String category);
     
     List<Item> findByStatus(String status);
 
-    @Query("SELECT i FROM Item i WHERE i.category IN :categories")
+    @Query("SELECT i FROM Item i WHERE i.categories IN :categories")
     List<Item> findByCategories(@Param("categories") List<String> categories);
 
     @Query("SELECT i FROM Item i WHERE i.status IN :statuses")
     List<Item> findByStatuses(@Param("statuses") List<String> statuses);
 
-     @Query("SELECT i FROM Item i WHERE i.id = :id")
-    Optional<Item> findById(@Param("id") Long id);
+    @Query("SELECT i FROM Item i WHERE i.itemId = :id")
+    Optional<Item> findById(@Param("id") Integer id);
 
-    @Query("DELETE FROM Item i WHERE i.id = :id")
-    void deleteById(@Param("id") Long id);
+    // New queries for enhanced functionality
+    @Query("SELECT i FROM Item i WHERE LOWER(i.itemName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+           "OR LOWER(i.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Item> searchItems(@Param("keyword") String keyword);
 
+<<<<<<< Updated upstream
     @Query("SELECT i FROM Item i WHERE i.room = :room")
     List<Item> findByRoom(@Param("room") String room);
 
@@ -39,3 +43,15 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     List<Item> findByLocation(@Param("location") Location location);
     // Additional custom queries can be added here
 }
+=======
+    @Query("SELECT i FROM Item i WHERE i.block = :location")
+    List<Item> findByLocation(@Param("location") String location);
+
+    @Query("SELECT i FROM Item i WHERE i.reportedBy = :userId")
+    List<Item> findByReportedBy(@Param("userId") Integer userId);
+
+    // Modified to use itemId instead of id to match the entity field
+    @Query("DELETE FROM Item i WHERE i.itemId = :id")
+    void deleteById(@Param("id") Integer id);
+}
+>>>>>>> Stashed changes
