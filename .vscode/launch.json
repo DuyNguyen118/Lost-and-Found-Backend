@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LostandfoundApplication<lostandfound>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.lostandfound.LostandfoundApplication",
+            "projectName": "lostandfound",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
