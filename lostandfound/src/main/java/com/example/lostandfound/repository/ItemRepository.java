@@ -25,6 +25,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query("SELECT i FROM Item i WHERE i.status IN :statuses")
     List<Item> findByStatuses(@Param("statuses") List<String> statuses);
 
+    @Override
     @Query("SELECT i FROM Item i WHERE i.itemId = :id")
     Optional<Item> findById(@Param("id") Integer id);
 
@@ -40,6 +41,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     List<Item> findByReportedBy(@Param("userId") Integer userId);
 
     // Modified to use itemId instead of id to match the entity field
+    @Override
     @Query("DELETE FROM Item i WHERE i.itemId = :id")
     void deleteById(@Param("id") Integer id);
 
