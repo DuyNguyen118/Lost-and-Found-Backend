@@ -47,7 +47,7 @@ public class MatchServiceImpl implements MatchService {
         List<Item> potentialMatches = itemRepository.findAll().stream()
                 .filter(i -> !i.getItemId().equals(itemId)) // Exclude the same item
                 .filter(i -> i.getStatus().equalsIgnoreCase(oppositeType)) // Match opposite type
-                .filter(i -> i.getCategories().equals(item.getCategories())) // Match category
+                .filter(i -> i.getCategory().equals(item.getCategory())) // Match category
                 .filter(i -> i.getLocation().equals(item.getLocation())) // Match location
                 .collect(Collectors.toList());
 

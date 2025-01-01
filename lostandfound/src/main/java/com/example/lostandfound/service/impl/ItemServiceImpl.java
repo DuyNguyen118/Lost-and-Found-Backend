@@ -39,7 +39,7 @@ public class ItemServiceImpl implements ItemService {
 
         // Update fields
         if (item.getItemName() != null) existingItem.setItemName(item.getItemName());
-        if (item.getCategories() != null) existingItem.setCategories(item.getCategories());
+        if (item.getCategory() != null) existingItem.setCategory(item.getCategory());
         if (item.getDescription() != null) existingItem.setDescription(item.getDescription());
         if (item.getLocation() != null) existingItem.setLocation(item.getLocation());
         if (item.getRoom() != null) existingItem.setRoom(item.getRoom());

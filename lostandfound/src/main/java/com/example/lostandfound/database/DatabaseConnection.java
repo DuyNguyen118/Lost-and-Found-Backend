@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=LostAndFoundDB";
     private static final String USERNAME = "LF";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "12345";
     private static Connection connection = null;
 
     private DatabaseConnection() {

@@ -29,8 +29,8 @@ public class Item {
     @Column(name = "item_name")
     private String itemName;
 
-    @Column(name = "categories")
-    private String categories;
+    @Column(name = "category")
+    private String category;
 
     @Column(name = "description", length = 1000)
     private String description;
@@ -77,12 +77,12 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public String getCategories() {
-        return categories;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategories(String categories) {
-        this.categories = categories;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getDescription() {
@@ -148,7 +148,7 @@ public class Item {
         Item item = (Item) o;
         return Objects.equals(itemId, item.itemId) &&
                 Objects.equals(itemName, item.itemName) &&
-                Objects.equals(categories, item.categories) &&
+                Objects.equals(category, item.category) &&
                 Objects.equals(description, item.description) &&
                 location == item.location &&
                 Objects.equals(room, item.room) &&
@@ -158,7 +158,7 @@ public class Item {
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, itemName, categories, description, location, room, status, contactInfo);
+        return Objects.hash(itemId, itemName, category, description, location, room, status, contactInfo);
     }
 
     @Override
@@ -166,7 +166,7 @@ public class Item {
         return "Item{" +
                 "itemId=" + itemId +
                 ", itemName='" + itemName + '\'' +
-                ", categories='" + categories + '\'' +
+                ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
                 ", location=" + location +
                 ", room=" + room +
