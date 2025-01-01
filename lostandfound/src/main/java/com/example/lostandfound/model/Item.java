@@ -36,8 +36,8 @@ public class Item {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "block")
-    private Location block;
+    @Column(name = "location")
+    private Location location;
 
     @Embedded
     private Room room;
@@ -93,12 +93,12 @@ public class Item {
         this.description = description;
     }
 
-    public Location getBlock() {
-        return block;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setBlock(Location block) {
-        this.block = block;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Room getRoom() {
@@ -150,7 +150,7 @@ public class Item {
                 Objects.equals(itemName, item.itemName) &&
                 Objects.equals(categories, item.categories) &&
                 Objects.equals(description, item.description) &&
-                block == item.block &&
+                location == item.location &&
                 Objects.equals(room, item.room) &&
                 Objects.equals(status, item.status) &&
                 Objects.equals(contactInfo, item.contactInfo);
@@ -158,7 +158,7 @@ public class Item {
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, itemName, categories, description, block, room, status, contactInfo);
+        return Objects.hash(itemId, itemName, categories, description, location, room, status, contactInfo);
     }
 
     @Override
@@ -168,7 +168,7 @@ public class Item {
                 ", itemName='" + itemName + '\'' +
                 ", categories='" + categories + '\'' +
                 ", description='" + description + '\'' +
-                ", block=" + block +
+                ", location=" + location +
                 ", room=" + room +
                 ", status='" + status + '\'' +
                 ", contactInfo='" + contactInfo + '\'' +

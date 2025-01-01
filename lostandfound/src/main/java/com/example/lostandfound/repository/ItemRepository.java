@@ -3,13 +3,13 @@ package com.example.lostandfound.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.lostandfound.model.enums.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.lostandfound.model.Item;
+import com.example.lostandfound.model.enums.Location;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
@@ -34,7 +34,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
            "OR LOWER(i.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Item> searchItems(@Param("keyword") String keyword);
 
-    @Query("SELECT i FROM Item i WHERE i.block = :location")
+    @Query("SELECT i FROM Item i WHERE i.location = :location")
     List<Item> findByLocation(@Param("location") String location);
 
     @Query("SELECT i FROM Item i WHERE i.reportedBy = :userId")
@@ -43,4 +43,11 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     // Modified to use itemId instead of id to match the entity field
     @Query("DELETE FROM Item i WHERE i.itemId = :id")
     void deleteById(@Param("id") Integer id);
+
+    @Query("SELECT i FROM Item i WHERE i.status = :status AND i.category = :category AND i.location = :location AND i.id <> :itemId")
+    List<Item> findPotentialMatches(@Param("status") String status, 
+                                    @Param("category") String category, 
+                                    @Param("location") String location, 
+                                    @Param("itemId") Long itemId);
+
 }
