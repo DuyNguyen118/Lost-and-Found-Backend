@@ -68,7 +68,7 @@ CREATE TABLE Chats (
 -- Insert Users
 INSERT INTO Users (Name, Password, Email, StudentId, Role, MeritPoints)
 VALUES 
-('Quyen', '123', 'john.doe@student.hcmiu.edu.vn', 'ITCSIU23032', 'Admin', 50),
+('Quyen', '123', 'quyenmai1912@gmail.com', 'ITCSIU23032', 'Admin', 50),
 ('Duy', '123', 'baoduy.song@gmail.com', 'ITCSIU23006', 'User', 55),
 ('VA', '123', 'anhoconnell@gmail.com', 'ITCSIU23050', 'User', 65);
 
@@ -118,7 +118,7 @@ VALUES
 INSERT INTO Chats (SenderId, ReceiverId, Content, Timestamp)
 VALUES 
 (2, 1, 'Hi, I lost my water bottle in the library.', GETDATE()),
-(1, 2, 'Hello, we found a blue water bottle in Room 201. Please confirm if it’s yours.', GETDATE()),
+(1, 2, 'Hello, we found a blue water bottle in Room 201. Please confirm if itï¿½s yours.', GETDATE()),
 (3, 1, 'I lost my laptop at A1 Building, can you help?', GETDATE()),
 (1, 3, 'Sure, can you provide more details?', GETDATE()),
 (2, 1, 'Thank you for helping me find my notebook!', GETDATE());
