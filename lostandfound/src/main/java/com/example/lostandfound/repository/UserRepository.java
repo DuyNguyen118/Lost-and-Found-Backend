@@ -13,6 +13,7 @@ import com.example.lostandfound.model.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findByEmail(String email);
 
+    @Override
     @Query("SELECT u FROM User u WHERE u.id = :id")
     Optional<User> findById(@Param("id") Integer id);
 
