@@ -1,14 +1,12 @@
 package com.example.lostandfound.service.impl;
 
-import java.util.List;
-
+import com.example.lostandfound.model.Item;
+import com.example.lostandfound.repository.ItemRepository;
+import com.example.lostandfound.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.lostandfound.model.Item;
-import com.example.lostandfound.model.enums.Location;
-import com.example.lostandfound.repository.ItemRepository;
-import com.example.lostandfound.service.ItemService;
+import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -54,16 +52,6 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
-<<<<<<< Updated upstream
-
-    @Override
-    public List<Item> findItemsByLocation(Location location) {
-        return itemRepository.findByLocation(location);
-    }
-}
-=======
-    
-    // Additional methods that might be useful for your UI
     
     @Override
     public List<Item> getLostItems() {
@@ -77,6 +65,6 @@ public class ItemServiceImpl implements ItemService {
     
     @Override
     public List<Item> searchItems(String keyword) {
-        return itemRepository.searchItems(keyword);    }
+        return itemRepository.searchItems(keyword);  // Changed to use the correct repository method
+    }
 }
->>>>>>> Stashed changes

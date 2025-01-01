@@ -1,10 +1,22 @@
 package com.example.lostandfound.model;
 
-import com.example.lostandfound.model.enums.Location;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Objects;
+
+import com.example.lostandfound.model.enums.Location;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Items")
@@ -40,12 +52,8 @@ public class Item {
     @Column(name = "report_date")
     private Date reportDate;
 
-    @Enumerated(EnumType.STRING)
-    private Location location;
-
-    private String room;
-
-    private String contactInfo; 
+    @Column(name = "reported_by")
+    private Long reportedBy;
 
     // Default constructor
     public Item() {
@@ -53,11 +61,11 @@ public class Item {
     }
 
     // Getters and Setters
-    public Long getItemId() {
+    public Integer getItemId() {
         return itemId;
     }
 
-    public void setItemId(Long itemId) {
+    public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
 
@@ -125,31 +133,7 @@ public class Item {
         this.reportDate = reportDate;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    public String getContactInfo() {
-        return contactInfo;
-    }
-
-    public void setContactInfo(String contactInfo) {
-        this.contactInfo = contactInfo;
-    }
-
-    public int getReportedBy() {
+    public Long getReportedBy() {
         return reportedBy;
     }
 
@@ -160,23 +144,21 @@ public class Item {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Item)) return false;
         Item item = (Item) o;
         return Objects.equals(itemId, item.itemId) &&
-               Objects.equals(itemName, item.itemName) &&
-               category == item.category &&
-               Objects.equals(description, item.description) &&
-               Objects.equals(status, item.status) &&
-               Objects.equals(reportDate, item.reportDate) &&
-               location == item.location &&
-               Objects.equals(room, item.room) &&
-               Objects.equals(contactInfo, item.contactInfo) &&
-               Objects.equals(reportedBy, item.reportedBy);
+                Objects.equals(itemName, item.itemName) &&
+                Objects.equals(categories, item.categories) &&
+                Objects.equals(description, item.description) &&
+                block == item.block &&
+                Objects.equals(room, item.room) &&
+                Objects.equals(status, item.status) &&
+                Objects.equals(contactInfo, item.contactInfo);
     }
-    
+
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, itemName, category, description, status, reportDate, location, room, contactInfo, reportedBy);
+        return Objects.hash(itemId, itemName, categories, description, block, room, status, contactInfo);
     }
 
     @Override
