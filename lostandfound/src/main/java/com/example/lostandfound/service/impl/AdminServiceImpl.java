@@ -40,7 +40,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void approveItemReturn(Long itemId, Integer userId) {
+    public void approveItemReturn(Integer itemId, Integer userId) {
         // Fetch the item
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found with ID: " + itemId));

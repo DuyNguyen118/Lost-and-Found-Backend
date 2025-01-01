@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface AdminActionRepository extends JpaRepository<AdminAction, Integer> {
 
     // Find actions taken by a specific admin
-    List<AdminAction> findByAdminId(Long adminId);
+    List<AdminAction> findByAdminId(Integer adminId);
 
     // Find actions by type
     @Query("SELECT a FROM AdminAction a WHERE a.actionType = :type")

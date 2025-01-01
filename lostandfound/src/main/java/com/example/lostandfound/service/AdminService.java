@@ -9,6 +9,6 @@ import com.example.lostandfound.model.User;
 public interface AdminService {
     List<User> getAllUsers();
     List<Item> getAllItems();
-    void approveItemReturn(Long itemId, Integer userId);
+    void approveItemReturn(Integer itemId, Integer userId);
     AdminAction logAdminAction(AdminAction action);
 }
