@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.lostandfound.model.Item;
+import com.example.lostandfound.model.enums.Location;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
@@ -28,5 +29,13 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query("DELETE FROM Item i WHERE i.id = :id")
     void deleteById(@Param("id") Long id);
 
+    @Query("SELECT i FROM Item i WHERE i.room = :room")
+    List<Item> findByRoom(@Param("room") String room);
+
+    @Query("SELECT i FROM Item i WHERE i.contactInfo = :contactInfo")
+    List<Item> findByContactInfo(@Param("contactInfo") String contactInfo);
+
+    @Query("SELECT i FROM Item i WHERE i.location = :location")
+    List<Item> findByLocation(@Param("location") Location location);
     // Additional custom queries can be added here
 }

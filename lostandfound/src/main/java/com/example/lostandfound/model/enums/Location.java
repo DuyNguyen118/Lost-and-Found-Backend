@@ -3,8 +3,8 @@ package com.example.lostandfound.model.enums;
 public enum Location {
     LIBRARY("Library"),
     CANTEEN("Canteen"),
-    A1_BUILDING("A1 Building"),
-    A2_BUILDING("A2 Building"),
+    BLOCK_A1("A1"),
+    BLOCK_A2("A2"),
     PARKING_AREA("Parking Area"),
     CENTRAL_LIBRARY("Central Library"),
     ER_INSTITUTE("ER Institute");

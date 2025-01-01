@@ -1,6 +1,7 @@
 package com.example.lostandfound.service.impl;
 
 import com.example.lostandfound.model.Item;
+import com.example.lostandfound.model.enums.Location;
 import com.example.lostandfound.repository.ItemRepository;
 import com.example.lostandfound.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getAllItems() {
         return itemRepository.findAll();
+    }
+
+    @Override
+    public List<Item> findItemsByLocation(Location location) {
+        return itemRepository.findByLocation(location);
     }
 }

@@ -40,8 +40,12 @@ public class Item {
     @Column(name = "report_date")
     private Date reportDate;
 
-    @Column(name = "reported_by")
-    private Long reportedBy;
+    @Enumerated(EnumType.STRING)
+    private Location location;
+
+    private String room;
+
+    private String contactInfo; 
 
     // Default constructor
     public Item() {
@@ -121,7 +125,31 @@ public class Item {
         this.reportDate = reportDate;
     }
 
-    public Long getReportedBy() {
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    public int getReportedBy() {
         return reportedBy;
     }
 
@@ -132,21 +160,23 @@ public class Item {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Item)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
         return Objects.equals(itemId, item.itemId) &&
-                Objects.equals(itemName, item.itemName) &&
-                Objects.equals(categories, item.categories) &&
-                Objects.equals(description, item.description) &&
-                block == item.block &&
-                Objects.equals(room, item.room) &&
-                Objects.equals(status, item.status) &&
-                Objects.equals(contactInfo, item.contactInfo);
+               Objects.equals(itemName, item.itemName) &&
+               category == item.category &&
+               Objects.equals(description, item.description) &&
+               Objects.equals(status, item.status) &&
+               Objects.equals(reportDate, item.reportDate) &&
+               location == item.location &&
+               Objects.equals(room, item.room) &&
+               Objects.equals(contactInfo, item.contactInfo) &&
+               Objects.equals(reportedBy, item.reportedBy);
     }
-
+    
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, itemName, categories, description, block, room, status, contactInfo);
+        return Objects.hash(itemId, itemName, category, description, status, reportDate, location, room, contactInfo, reportedBy);
     }
 
     @Override

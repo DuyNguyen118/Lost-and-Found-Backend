@@ -1,6 +1,7 @@
 package com.example.lostandfound.controller;
 
 import com.example.lostandfound.model.Item;
+import com.example.lostandfound.model.enums.Location;
 import com.example.lostandfound.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,10 @@ public class ItemController {
     public String deleteItem(@PathVariable Long id) {
         itemService.deleteItem(id);
         return "Item deleted successfully.";
+    }
+
+    @GetMapping("/by-location")
+    public List<Item> getItemsByLocation(@RequestParam Location location) {
+        return itemService.findItemsByLocation(location);
     }
 }
