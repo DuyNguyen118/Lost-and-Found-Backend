@@ -1,52 +1,59 @@
 package com.example.lostandfound.model;
 
-import java.util.Date;
-import java.util.Locale.Category;
-import java.util.Objects;
-
 import com.example.lostandfound.model.enums.Location;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Items")
 public class Item {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int itemId;
+    private Integer itemId;
 
+    @NotBlank
+    @Column(name = "item_name")
     private String itemName;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    @Column(name = "categories")
+    private String categories;
 
+    @Column(name = "description", length = 1000)
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "block")
+    private Location block;
+
+    @Embedded
+    private Room room;
+
+    @Column(name = "status")
     private String status;
 
-    @Temporal(TemporalType.DATE)
+    @Column(name = "contact_info")
+    private String contactInfo;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "report_date")
     private Date reportDate;
 
-    @Enumerated(EnumType.STRING)
-    private Location location;
+    @Column(name = "reported_by")
+    private Long reportedBy;
 
-    private int reportedBy;
+    // Default constructor
+    public Item() {
+        this.reportDate = new Date();
+    }
 
     // Getters and Setters
-    public int getItemId() {
+    public Long getItemId() {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(Long itemId) {
         this.itemId = itemId;
     }
 
@@ -58,12 +65,12 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 
     public String getDescription() {
@@ -74,12 +81,36 @@ public class Item {
         this.description = description;
     }
 
+    public Location getBlock() {
+        return block;
+    }
+
+    public void setBlock(Location block) {
+        this.block = block;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
     }
 
     public Date getReportDate() {
@@ -90,50 +121,47 @@ public class Item {
         this.reportDate = reportDate;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public int getReportedBy() {
+    public Long getReportedBy() {
         return reportedBy;
     }
 
-    public void setReportedBy(int reportedBy) {
+    public void setReportedBy(Long reportedBy) {
         this.reportedBy = reportedBy;
     }
 
     @Override
-public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Item item = (Item) o;
-    return itemId == item.itemId &&
-            Objects.equals(itemName, item.itemName) &&
-            category == item.category &&
-            Objects.equals(description, item.description) &&
-            Objects.equals(status, item.status);
-}
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+        Item item = (Item) o;
+        return Objects.equals(itemId, item.itemId) &&
+                Objects.equals(itemName, item.itemName) &&
+                Objects.equals(categories, item.categories) &&
+                Objects.equals(description, item.description) &&
+                block == item.block &&
+                Objects.equals(room, item.room) &&
+                Objects.equals(status, item.status) &&
+                Objects.equals(contactInfo, item.contactInfo);
+    }
 
-@Override
-public int hashCode() {
-    return Objects.hash(itemId, itemName, category, description, status);
-}
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemId, itemName, categories, description, block, room, status, contactInfo);
+    }
 
-@Override
-public String toString() {
-    return "Item{" +
-            "itemId=" + itemId +
-            ", itemName='" + itemName + '\'' +
-            ", category=" + category +
-            ", description='" + description + '\'' +
-            ", status='" + status + '\'' +
-            ", reportDate=" + reportDate +
-            ", location=" + location +
-            ", reportedBy=" + reportedBy +
-            '}';
-}
+    @Override
+    public String toString() {
+        return "Item{" +
+                "itemId=" + itemId +
+                ", itemName='" + itemName + '\'' +
+                ", categories='" + categories + '\'' +
+                ", description='" + description + '\'' +
+                ", block=" + block +
+                ", room=" + room +
+                ", status='" + status + '\'' +
+                ", contactInfo='" + contactInfo + '\'' +
+                ", reportDate=" + reportDate +
+                ", reportedBy=" + reportedBy +
+                '}';
+    }
 }
