@@ -30,7 +30,7 @@ public class AdminController {
 
     // Review and approve an item return
     @PostMapping("/approveReturn")
-    public String approveItemReturn(@RequestParam Long itemId, @RequestParam Long userId) {
+    public String approveItemReturn(@RequestParam Long itemId, @RequestParam Integer userId) {
         adminService.approveItemReturn(itemId, userId);
         return "Item return approved, merit points updated.";
     }
