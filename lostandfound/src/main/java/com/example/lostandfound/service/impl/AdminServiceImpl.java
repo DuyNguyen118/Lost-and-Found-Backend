@@ -1,5 +1,10 @@
 package com.example.lostandfound.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.lostandfound.model.AdminAction;
 import com.example.lostandfound.model.Item;
 import com.example.lostandfound.model.User;
@@ -7,11 +12,6 @@ import com.example.lostandfound.repository.AdminActionRepository;
 import com.example.lostandfound.repository.ItemRepository;
 import com.example.lostandfound.repository.UserRepository;
 import com.example.lostandfound.service.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -20,7 +20,6 @@ public class AdminServiceImpl implements AdminService {
     private final ItemRepository itemRepository;
     private final AdminActionRepository adminActionRepository;
 
-    @Autowired
     public AdminServiceImpl(UserRepository userRepository, 
                             ItemRepository itemRepository, 
                             AdminActionRepository adminActionRepository) {
