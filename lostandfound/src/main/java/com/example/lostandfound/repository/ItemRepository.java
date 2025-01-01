@@ -19,8 +19,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     List<Item> findByLocation(Location location);
 
-    @Query("SELECT i FROM Item i WHERE i.categories IN :categories")
-    List<Item> findByCategories(@Param("categories") List<String> categories);
+    @Query("SELECT i FROM Item i WHERE i.category IN :category")
+    List<Item> findByCategory(@Param("category") List<String> category);
 
     @Query("SELECT i FROM Item i WHERE i.status IN :statuses")
     List<Item> findByStatuses(@Param("statuses") List<String> statuses);
