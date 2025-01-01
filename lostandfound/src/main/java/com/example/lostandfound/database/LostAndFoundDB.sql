@@ -75,16 +75,16 @@ VALUES
 -- Insert Items
 INSERT INTO Items (ItemName, Category, Description, Status, ReportDate, Location, Room, ContactInfo, ReportedBy)
 VALUES 
-('Blue Water Bottle', 'Accessories', 'Lost in library', 'Lost', GETDATE(), 'LIBRARY', 'Room 201', 'jane.smith@gmail.com', 2),
-('Red Notebook', 'Stationery', 'Found in cafeteria', 'Found', GETDATE(), 'CANTEEN', 'N/A', 'admin@lostfound.com', 1),
-('Dell Laptop', 'Electronics', 'Lost at A1 Building', 'Lost', GETDATE(), 'A1_BUILDING', 'Room 103', 'mike.johnson@gmail.com', 3),
-('Black Umbrella', 'Accessories', 'Found near parking area', 'Found', GETDATE(), 'PARKING_AREA', 'Parking Lot A', 'admin@lostfound.com', 1),
-('Physics Textbook', 'Books', 'Lost in library', 'Lost', GETDATE(), 'CENTRAL_LIBRARY', '3rd Floor', 'jane.smith@gmail.com', 2),
-('Leather Wallet', 'Accessories', 'Found in A2 Building', 'Found', GETDATE(), 'A2_BUILDING', 'N/A', 'admin@lostfound.com', 1),
-('iPhone 13', 'Electronics', 'Lost at ER Institute', 'Lost', GETDATE(), 'ER_INSTITUTE', 'Room 45', 'mike.johnson@gmail.com', 3),
-('Sketchbook', 'Stationery', 'Found in library', 'Found', GETDATE(), 'LIBRARY', 'Room 102', 'jane.smith@gmail.com', 2),
-('Keychain', 'Accessories', 'Found at canteen', 'Found', GETDATE(), 'CANTEEN', 'Near Counter', 'admin@lostfound.com', 1),
-('Leather Bag', 'Clothing', 'Lost at parking area', 'Lost', GETDATE(), 'PARKING_AREA', 'Lot B', 'mike.johnson@gmail.com', 3);
+('Blue Water Bottle', 'Accessories', 'Lost in library', 'Lost', GETDATE(), 'LIBRARY', '2nd floor', 'jane.smith@gmail.com', 2),
+('Red Notebook', 'Stationery', 'Found in cafeteria', 'Found', GETDATE(), 'CANTEEN', 'Zero Coffee', 'admin@lostfound.com', 1),
+('Dell Laptop', 'Electronics', 'Lost at A1 Building', 'Lost', GETDATE(), 'BLOCK_A1', '302', 'mike.johnson@gmail.com', 3),
+('Black Umbrella', 'Accessories', 'Found near parking area', 'Found', GETDATE(), 'PARKING_AREA', 'Lot A2', 'admin@lostfound.com', 1),
+('Physics Textbook', 'Books', 'Lost in library', 'Lost', GETDATE(), 'CENTRAL_LIBRARY', 'L108', 'jane.smith@gmail.com', 2),
+('Leather Wallet', 'Accessories', 'Found in A2 Building', 'Found', GETDATE(), 'BLOCK_A2', '511', 'admin@lostfound.com', 1),
+('iPhone 13', 'Electronics', 'Lost at ER Institute', 'Lost', GETDATE(), 'ER_INSTITUTE', 'C421', 'mike.johnson@gmail.com', 3),
+('Sketchbook', 'Stationery', 'Found in library', 'Found', GETDATE(), 'LIBRARY', '1st floor', 'jane.smith@gmail.com', 2),
+('Keychain', 'Accessories', 'Found at canteen', 'Found', GETDATE(), 'CANTEEN', 'Near HD Court', 'admin@lostfound.com', 1),
+('Leather Bag', 'Clothing', 'Lost at parking area', 'Lost', GETDATE(), 'PARKING_AREA', 'Lot A1', 'mike.johnson@gmail.com', 3);
 
 -- Insert Reports
 INSERT INTO Reports (ReportType, ReportDate, ItemId, UserId)
@@ -118,7 +118,7 @@ VALUES
 INSERT INTO Chats (SenderId, ReceiverId, Content, Timestamp)
 VALUES 
 (2, 1, 'Hi, I lost my water bottle in the library.', GETDATE()),
-(1, 2, 'Hello, we found a blue water bottle in Room 201. Please confirm if it�s yours.', GETDATE()),
+(1, 2, 'Hello, we found a blue water bottle in the campus lib, 2nd floor.', GETDATE()),
 (3, 1, 'I lost my laptop at A1 Building, can you help?', GETDATE()),
 (1, 3, 'Sure, can you provide more details?', GETDATE()),
 (2, 1, 'Thank you for helping me find my notebook!', GETDATE());
