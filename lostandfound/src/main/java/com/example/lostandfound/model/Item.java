@@ -39,6 +39,10 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Location location;
 
+    private String room;
+
+    private String contactInfo; 
+
     private int reportedBy;
 
     // Getters and Setters
@@ -98,6 +102,22 @@ public class Item {
         this.location = location;
     }
 
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
     public int getReportedBy() {
         return reportedBy;
     }
@@ -107,33 +127,40 @@ public class Item {
     }
 
     @Override
-public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Item item = (Item) o;
-    return itemId == item.itemId &&
-            Objects.equals(itemName, item.itemName) &&
-            category == item.category &&
-            Objects.equals(description, item.description) &&
-            Objects.equals(status, item.status);
-}
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(itemId, item.itemId) &&
+               Objects.equals(itemName, item.itemName) &&
+               category == item.category &&
+               Objects.equals(description, item.description) &&
+               Objects.equals(status, item.status) &&
+               Objects.equals(reportDate, item.reportDate) &&
+               location == item.location &&
+               Objects.equals(room, item.room) &&
+               Objects.equals(contactInfo, item.contactInfo) &&
+               Objects.equals(reportedBy, item.reportedBy);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemId, itemName, category, description, status, reportDate, location, room, contactInfo, reportedBy);
+    }
 
-@Override
-public int hashCode() {
-    return Objects.hash(itemId, itemName, category, description, status);
-}
-
-@Override
-public String toString() {
-    return "Item{" +
-            "itemId=" + itemId +
-            ", itemName='" + itemName + '\'' +
-            ", category=" + category +
-            ", description='" + description + '\'' +
-            ", status='" + status + '\'' +
-            ", reportDate=" + reportDate +
-            ", location=" + location +
-            ", reportedBy=" + reportedBy +
-            '}';
-}
+    @Override
+    public String toString() {
+        return "Item{" +
+                "itemId=" + itemId +
+                ", itemName='" + itemName + '\'' +
+                ", category=" + category +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", reportDate=" + reportDate +
+                ", location=" + location +
+                ", room='" + room + '\'' +
+                ", contactInfo='" + contactInfo + '\'' +
+                ", reportedBy=" + reportedBy +
+                '}';
+    }
 }
