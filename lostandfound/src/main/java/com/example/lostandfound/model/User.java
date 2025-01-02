@@ -1,9 +1,13 @@
 package com.example.lostandfound.model;
 
-import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Users")
@@ -30,12 +34,6 @@ public class User {
 
     @Column(nullable = false)
     private int meritPoints;
-
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Chat> sentChats = new ArrayList<>();
-
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Chat> receivedChats = new ArrayList<>();
 
     // Getters and Setters
     public int getUserId() {
@@ -92,22 +90,6 @@ public class User {
 
     public void setMeritPoints(int meritPoints) {
         this.meritPoints = meritPoints;
-    }
-
-    public List<Chat> getSentChats() {
-        return sentChats;
-    }
-
-    public void setSentChats(List<Chat> sentChats) {
-        this.sentChats = sentChats;
-    }
-
-    public List<Chat> getReceivedChats() {
-        return receivedChats;
-    }
-
-    public void setReceivedChats(List<Chat> receivedChats) {
-        this.receivedChats = receivedChats;
     }
 
     // Override methods for equals and hashCode
