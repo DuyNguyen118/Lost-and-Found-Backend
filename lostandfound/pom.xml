@@ -94,6 +94,12 @@
     		<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
+		<dependency>
+    		<groupId>com.zaxxer</groupId>
+    		<artifactId>HikariCP</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
