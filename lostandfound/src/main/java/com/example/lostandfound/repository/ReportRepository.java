@@ -17,16 +17,16 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
     List<Report> findByReportType(@Param("reportType") String reportType);
 
     // Find reports by a specific item ID
-    @Query("SELECT r FROM Report r WHERE r.item.id = :itemId")
+    @Query("SELECT r FROM Report r WHERE r.itemId = :itemId")
     List<Report> findByItemId(@Param("itemId") Long itemId);
 
     // Find reports submitted by a specific user ID
-    @Query("SELECT r FROM Report r WHERE r.user.id = :userId")
+    @Query("SELECT r FROM Report r WHERE r.userId = :userId")
     List<Report> findByUserId(@Param("userId") Long userId);
 
     // Search for reports by description content (case-insensitive)
-    @Query("SELECT r FROM Report r WHERE LOWER(r.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<Report> searchByDescription(@Param("keyword") String keyword);
+    //@Query("SELECT r FROM Report r WHERE LOWER(r.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    //List<Report> searchByDescription(@Param("keyword") String keyword);
 
     // Get all reports within a specific date range
     @Query("SELECT r FROM Report r WHERE r.reportDate BETWEEN :startDate AND :endDate")
@@ -34,6 +34,6 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
                                         @Param("endDate") java.util.Date endDate);
 
     // Get reports that match both item and user
-    @Query("SELECT r FROM Report r WHERE r.item.id = :itemId AND r.user.id = :userId")
+    @Query("SELECT r FROM Report r WHERE r.itemId = :itemId AND r.userId = :userId")
     List<Report> findReportsByItemAndUser(@Param("itemId") Long itemId, @Param("userId") Long userId);
 }

@@ -28,10 +28,10 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
                                        @Param("endDate") java.util.Date endDate);
 
     // Find matches by category similarity
-    @Query("SELECT m FROM Match m WHERE m.lostItem.category = :category OR m.foundItem.category = :category")
-    List<Match> findByCategory(@Param("category") String category);
+    //@Query("SELECT m FROM Match m WHERE m.lostItem.category = :category OR m.foundItem.category = :category")
+    //List<Match> findByCategory(@Param("category") String category);
 
     // Custom query for suggesting matches based on location
-    @Query("SELECT m FROM Match m WHERE m.lostItem.location = m.foundItem.location AND m.lostItemId <> m.foundItemId")
-    List<Match> findMatchesByLocation();
+    //@Query("SELECT m FROM Match m WHERE m.lostItem.location = m.foundItem.location AND m.lostItemId <> m.foundItemId")
+    //List<Match> findMatchesByLocation();
 }
