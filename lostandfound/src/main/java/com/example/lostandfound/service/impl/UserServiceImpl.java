@@ -43,4 +43,11 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User validateUserLogin(String username, String password) {
+    return userRepository.findByName(username)
+            .filter(user -> user.getPassword().equals(password))
+            .orElseThrow(() -> new RuntimeException("Invalid username or password"));
+}
 }

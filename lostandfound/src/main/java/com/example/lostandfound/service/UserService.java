@@ -1,7 +1,6 @@
 package com.example.lostandfound.service;
 
 import java.util.List;
-
 import com.example.lostandfound.model.User;
 
 public interface UserService {
@@ -10,4 +9,5 @@ public interface UserService {
     User updateUser(Integer id, User user);
     void deleteUser(Integer id);
     List<User> getAllUsers();
+    User validateUserLogin(String username, String password); // New method
 }
