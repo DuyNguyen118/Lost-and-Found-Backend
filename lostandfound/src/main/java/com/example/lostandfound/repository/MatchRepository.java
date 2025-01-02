@@ -12,13 +12,15 @@ import com.example.lostandfound.model.Match;
 @Repository
 public interface MatchRepository extends JpaRepository<Match, Integer> {
 
-    // Find all matches involving a specific lost item
-    @Query("SELECT m FROM Match m WHERE m.lostItemId = :lostItemId")
-    List<Match> findByLostItemId(@Param("lostItemId") Long lostItemId);
+    @Query("SELECT m FROM Match m WHERE m.lostItemId = :itemId OR m.foundItemId = :itemId")
+    List<Match> findByItemId(@Param("itemId") int itemId);
 
-    // Find all matches involving a specific found item
+    @Query("SELECT m FROM Match m WHERE m.lostItemId = :lostItemId")
+    List<Match> findByLostItemId(@Param("lostItemId") int lostItemId);
+    
     @Query("SELECT m FROM Match m WHERE m.foundItemId = :foundItemId")
-    List<Match> findByFoundItemId(@Param("foundItemId") Long foundItemId);
+    List<Match> findByFoundItemId(@Param("foundItemId") int foundItemId);
+
 
     // Find matches by date range
     @Query("SELECT m FROM Match m WHERE m.matchDate BETWEEN :startDate AND :endDate")

@@ -1,8 +1,15 @@
 package com.example.lostandfound.model;
 
-import java.util.Objects;
-import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Objects;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "Matches")
@@ -32,16 +39,22 @@ public class Match {
         return lostItemId;
     }
 
-    public void setLostItemId(int  lostItemId2) {
-        this.lostItemId = lostItemId2;
-    }
+    public void setLostItemId(int lostItemId) {
+        if (lostItemId <= 0) {
+            throw new IllegalArgumentException("Invalid lost item ID.");
+        }
+        this.lostItemId = lostItemId;
+    }    
 
     public int getFoundItemId() {
         return foundItemId;
     }
 
-    public void setFoundItemId(int foundItemId2) {
-        this.foundItemId = foundItemId2;
+    public void setFoundItemId(int foundItemId) {
+        if (foundItemId <= 0) {
+            throw new IllegalArgumentException("Invalid found item ID.");
+        }
+        this.foundItemId = foundItemId;
     }
 
     public Date getMatchDate() {

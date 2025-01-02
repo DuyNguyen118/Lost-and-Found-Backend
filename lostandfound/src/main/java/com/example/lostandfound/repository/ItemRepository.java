@@ -29,7 +29,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query("SELECT i FROM Item i WHERE i.itemId = :id")
     Optional<Item> findById(@Param("id") Integer id);
 
-    // New queries for enhanced functionality
+    @Query("SELECT i FROM Item i WHERE i.status = :status AND i.itemId = :itemId")
+    Optional<Item> findByStatusAndId(@Param("status") String status, @Param("itemId") int itemId);
+
     @Query("SELECT i FROM Item i WHERE LOWER(i.itemName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
            "OR LOWER(i.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Item> searchItems(@Param("keyword") String keyword);
@@ -40,7 +42,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query("SELECT i FROM Item i WHERE i.reportedBy = :userId")
     List<Item> findByReportedBy(@Param("userId") Integer userId);
 
-    // Modified to use itemId instead of id to match the entity field
     @Override
     @Query("DELETE FROM Item i WHERE i.itemId = :id")
     void deleteById(@Param("id") Integer id);
