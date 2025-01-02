@@ -26,7 +26,7 @@ CREATE TABLE Items (
     Location NVARCHAR(50) NOT NULL,
     Room NVARCHAR(50),
     ContactInfo NVARCHAR(100),
-    ReportedBy BIGINT FOREIGN KEY REFERENCES Users(UserId)
+    ReportedBy BIGINT NOT NULL FOREIGN KEY REFERENCES Users(UserId)
 );
 
 -- Reports table
@@ -34,14 +34,14 @@ CREATE TABLE Reports (
     ReportId BIGINT PRIMARY KEY IDENTITY,
     ReportType NVARCHAR(50) NOT NULL,
     ReportDate DATETIME NOT NULL DEFAULT GETDATE(),
-    ItemId BIGINT FOREIGN KEY REFERENCES Items(ItemId),
-    UserId BIGINT FOREIGN KEY REFERENCES Users(UserId)
+    ItemId BIGINT NOT NULL FOREIGN KEY REFERENCES Items(ItemId),
+    UserId BIGINT NOT NULL FOREIGN KEY REFERENCES Users(UserId)
 );
 
 -- AdminActions table
 CREATE TABLE AdminActions (
     ActionId BIGINT PRIMARY KEY IDENTITY,
-    AdminId BIGINT FOREIGN KEY REFERENCES Users(UserId),
+    AdminId BIGINT NOT NULL FOREIGN KEY REFERENCES Users(UserId),
     ActionType NVARCHAR(100) NOT NULL,
     ActionDate DATETIME NOT NULL DEFAULT GETDATE(),
     Details NVARCHAR(255)
@@ -50,17 +50,17 @@ CREATE TABLE AdminActions (
 -- Matches table
 CREATE TABLE Matches (
     MatchId BIGINT PRIMARY KEY IDENTITY,
-    LostItemId BIGINT FOREIGN KEY REFERENCES Items(ItemId),
-    FoundItemId BIGINT FOREIGN KEY REFERENCES Items(ItemId),
+    LostItemId BIGINT NOT NULL FOREIGN KEY REFERENCES Items(ItemId),
+    FoundItemId BIGINT NOT NULL FOREIGN KEY REFERENCES Items(ItemId),
     MatchDate DATETIME NOT NULL DEFAULT GETDATE()
 );
 
 -- Chats table
 CREATE TABLE Chats (
     ChatId INT PRIMARY KEY IDENTITY,
-    SenderId INT FOREIGN KEY REFERENCES Users(UserId),
-    ReceiverId INT FOREIGN KEY REFERENCES Users(UserId),
+    UserId BIGINT NOT NULL FOREIGN KEY REFERENCES Users(UserId),
     Content NVARCHAR(MAX) NOT NULL,
+    IsSystemMessage BIT NOT NULL DEFAULT 0,
     Timestamp DATETIME NOT NULL DEFAULT GETDATE()
 );
 
@@ -92,13 +92,7 @@ VALUES
 ('Lost', GETDATE(), 1, 2),
 ('Found', GETDATE(), 2, 1),
 ('Lost', GETDATE(), 3, 3),
-('Found', GETDATE(), 4, 1),
-('Lost', GETDATE(), 5, 2),
-('Found', GETDATE(), 6, 1),
-('Lost', GETDATE(), 7, 3),
-('Found', GETDATE(), 8, 2),
-('Found', GETDATE(), 9, 1),
-('Lost', GETDATE(), 10, 3);
+('Found', GETDATE(), 4, 1);
 
 -- Insert Admin Actions
 INSERT INTO AdminActions (AdminId, ActionType, ActionDate, Details)
@@ -111,15 +105,13 @@ VALUES
 INSERT INTO Matches (LostItemId, FoundItemId, MatchDate)
 VALUES 
 (1, 2, GETDATE()),
-(3, 4, GETDATE()),
-(5, 6, GETDATE());
+(3, 4, GETDATE());
 
 -- Insert Chats
-INSERT INTO Chats (SenderId, ReceiverId, Content, Timestamp)
+INSERT INTO Chats (UserId, Content, IsSystemMessage, Timestamp)
 VALUES 
-(2, 1, 'Hi, I lost my water bottle in the library.', GETDATE()),
-(1, 2, 'Hello, we found a blue water bottle in the campus lib, 2nd floor.', GETDATE()),
-(3, 1, 'I lost my laptop at A1 Building, can you help?', GETDATE()),
-(1, 3, 'Sure, can you provide more details?', GETDATE()),
-(2, 1, 'Thank you for helping me find my notebook!', GETDATE());
-
+(2, 'Hi, I lost my water bottle in the library.', 0, GETDATE()),
+(1, 'We found a blue water bottle in the campus library, 2nd floor.', 1, GETDATE()),
+(3, 'I lost my laptop at A1 Building, can you help?', 0, GETDATE()),
+(1, 'Sure, we are on it.', 1, GETDATE()),
+(2, 'Thank you for helping me find my notebook!', 0, GETDATE());
