@@ -1,52 +1,73 @@
 package com.example.lostandfound.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Chats")
 public class Chat {
-    private Long chatId;           
-    private Long senderId;         
-    private Long receiverId;       
-    private String content;        
-    private LocalDateTime timestamp; 
-    private boolean isSystemMessage; 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int chatId;
+
+    @ManyToOne
+    @JoinColumn(name = "sender", nullable = false)
+    private User sender;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver", nullable = false)
+    private User receiver;
+
+
+    @Column(nullable = false, columnDefinition = "NVARCHAR(MAX)")
+    private String content;
+
+    @Column(nullable = false)
+    private LocalDateTime timestamp;
+
+    @Column(nullable = false)
+    private boolean isSystemMessage;
 
     // Constructors
     public Chat() {
+        this.timestamp = LocalDateTime.now(); // Default timestamp
+        this.isSystemMessage = false;        // Default value
     }
 
-    public Chat(Long chatId, Long senderId, Long receiverId, String content, LocalDateTime timestamp, boolean isSystemMessage) {
-        this.chatId = chatId;
-        this.senderId = senderId;
-        this.receiverId = receiverId;
+    public Chat(User sender, User receiver, String content, boolean isSystemMessage) {
+        this.sender = sender;
+        this.receiver = receiver;
         this.content = content;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.now(); // Automatically set timestamp
         this.isSystemMessage = isSystemMessage;
     }
 
     // Getters and Setters
-    public Long getChatId() {
+    public int getChatId() {
         return chatId;
     }
 
-    public void setChatId(Long chatId) {
+    public void setChatId(int chatId) {
         this.chatId = chatId;
     }
 
-    public Long getSenderId() {
-        return senderId;
+    public User getSender() {
+        return sender;
     }
 
-    public void setSenderId(Long senderId) {
-        this.senderId = senderId;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
-    public Long getReceiverId() {
-        return receiverId;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public void setReceiverId(Long receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
     public String getContent() {
@@ -75,7 +96,7 @@ public class Chat {
 
     @Override
     public int hashCode() {
-        return Objects.hash(chatId, senderId, receiverId, content, timestamp, isSystemMessage);
+        return Objects.hash(chatId, sender, receiver, content, timestamp, isSystemMessage);
     }
 
     @Override
@@ -85,8 +106,8 @@ public class Chat {
         Chat chat = (Chat) obj;
         return isSystemMessage == chat.isSystemMessage &&
                Objects.equals(chatId, chat.chatId) &&
-               Objects.equals(senderId, chat.senderId) &&
-               Objects.equals(receiverId, chat.receiverId) &&
+               Objects.equals(sender, chat.sender) &&
+               Objects.equals(receiver, chat.receiver) &&
                Objects.equals(content, chat.content) &&
                Objects.equals(timestamp, chat.timestamp);
     }
@@ -95,8 +116,8 @@ public class Chat {
     public String toString() {
         return "Chat{" +
                "chatId=" + chatId +
-               ", senderId=" + senderId +
-               ", receiverId=" + receiverId +
+               ", senderId=" + (sender != null ? sender.getName() : null) +
+               ", receiverId=" + (receiver != null ? receiver.getName() : null) +
                ", content='" + content + '\'' +
                ", timestamp=" + timestamp +
                ", isSystemMessage=" + isSystemMessage +
