@@ -1,9 +1,16 @@
 package com.example.lostandfound.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Chats")
@@ -14,13 +21,8 @@ public class Chat {
     private int chatId;
 
     @ManyToOne
-    @JoinColumn(name = "sender", nullable = false)
-    private User sender;
-
-    @ManyToOne
-    @JoinColumn(name = "receiver", nullable = false)
-    private User receiver;
-
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;  // User associated with this chat
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(MAX)")
     private String content;
@@ -29,19 +31,17 @@ public class Chat {
     private LocalDateTime timestamp;
 
     @Column(nullable = false)
-    private boolean isSystemMessage;
+    private boolean isSystemMessage;  // True if the message is from the system
 
     // Constructors
     public Chat() {
-        this.timestamp = LocalDateTime.now(); // Default timestamp
-        this.isSystemMessage = false;        // Default value
+        this.timestamp = LocalDateTime.now();
     }
 
-    public Chat(User sender, User receiver, String content, boolean isSystemMessage) {
-        this.sender = sender;
-        this.receiver = receiver;
+    public Chat(User user, String content, boolean isSystemMessage) {
+        this.user = user;
         this.content = content;
-        this.timestamp = LocalDateTime.now(); // Automatically set timestamp
+        this.timestamp = LocalDateTime.now();
         this.isSystemMessage = isSystemMessage;
     }
 
@@ -54,20 +54,12 @@ public class Chat {
         this.chatId = chatId;
     }
 
-    public User getSender() {
-        return sender;
+    public User getUser() {
+        return user;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getContent() {
@@ -95,29 +87,26 @@ public class Chat {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(chatId, sender, receiver, content, timestamp, isSystemMessage);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chat chat = (Chat) o;
+        return chatId == chat.chatId && isSystemMessage == chat.isSystemMessage &&
+               Objects.equals(user, chat.user) &&
+               Objects.equals(content, chat.content) &&
+               Objects.equals(timestamp, chat.timestamp);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Chat chat = (Chat) obj;
-        return isSystemMessage == chat.isSystemMessage &&
-               Objects.equals(chatId, chat.chatId) &&
-               Objects.equals(sender, chat.sender) &&
-               Objects.equals(receiver, chat.receiver) &&
-               Objects.equals(content, chat.content) &&
-               Objects.equals(timestamp, chat.timestamp);
+    public int hashCode() {
+        return Objects.hash(chatId, user, content, timestamp, isSystemMessage);
     }
 
     @Override
     public String toString() {
         return "Chat{" +
                "chatId=" + chatId +
-               ", senderId=" + (sender != null ? sender.getName() : null) +
-               ", receiverId=" + (receiver != null ? receiver.getName() : null) +
+               ", user=" + (user != null ? user.getName() : "null") +
                ", content='" + content + '\'' +
                ", timestamp=" + timestamp +
                ", isSystemMessage=" + isSystemMessage +
