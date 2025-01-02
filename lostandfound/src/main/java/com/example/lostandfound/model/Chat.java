@@ -28,10 +28,10 @@ public class Chat {
     private String content;
 
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private boolean isSystemMessage;  // True if the message is from the system
 
     @Column(nullable = false)
-    private boolean isSystemMessage;  // True if the message is from the system
+    private LocalDateTime timestamp;
 
     // Constructors
     public Chat() {
@@ -70,20 +70,20 @@ public class Chat {
         this.content = content;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public boolean isSystemMessage() {
         return isSystemMessage;
     }
 
     public void setSystemMessage(boolean systemMessage) {
         isSystemMessage = systemMessage;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class Chat {
 
     @Override
     public int hashCode() {
-        return Objects.hash(chatId, user, content, timestamp, isSystemMessage);
+        return Objects.hash(chatId, user, content, isSystemMessage, timestamp);
     }
 
     @Override
@@ -108,8 +108,8 @@ public class Chat {
                "chatId=" + chatId +
                ", user=" + (user != null ? user.getName() : "null") +
                ", content='" + content + '\'' +
-               ", timestamp=" + timestamp +
                ", isSystemMessage=" + isSystemMessage +
+               ", timestamp=" + timestamp +
                '}';
     }
 }

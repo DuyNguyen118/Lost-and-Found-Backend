@@ -77,7 +77,7 @@ public boolean equals(Object o) {
 
 @Override
 public int hashCode() {
-    return Objects.hash(matchId, lostItemId, foundItemId);
+    return Objects.hash(matchId, lostItemId, foundItemId, matchDate);
 }
 
 @Override
