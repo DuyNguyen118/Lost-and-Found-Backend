@@ -1,8 +1,10 @@
 package com.example.lostandfound.service;
 
-import com.example.lostandfound.model.Item;
-import com.example.lostandfound.model.enums.Location;
 import java.util.List;
+
+import com.example.lostandfound.model.Item;
+import com.example.lostandfound.model.enums.Category;
+import com.example.lostandfound.model.enums.Location;
 
 public interface ItemService {
     Item reportItem(Item item);
@@ -13,5 +15,7 @@ public interface ItemService {
     List<Item> getLostItems();
     List<Item> getFoundItems();
     List<Item> searchItems(String keyword);
-    List<Item> findItemsByLocation(Location location); // Added missing method
+    List<Item> findItemsByLocation(Location location); 
+    List<Item> findItemsByCategory(Category category); 
+
 }

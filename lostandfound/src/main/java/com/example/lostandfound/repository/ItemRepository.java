@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.lostandfound.model.Item;
+import com.example.lostandfound.model.enums.Category;
 import com.example.lostandfound.model.enums.Location;
 
 @Repository
@@ -51,5 +52,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
                                     @Param("category") String category, 
                                     @Param("location") String location, 
                                     @Param("itemId") Long itemId);
+
+    @Query("SELECT i FROM Item i WHERE i.category = :category")                     
+    List<Item> findItemsByCategory(Category category);
 
 }

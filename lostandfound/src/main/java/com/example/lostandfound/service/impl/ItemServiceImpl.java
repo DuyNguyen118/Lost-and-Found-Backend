@@ -1,6 +1,7 @@
 package com.example.lostandfound.service.impl;
 
 import com.example.lostandfound.model.Item;
+import com.example.lostandfound.model.enums.Category;
 import com.example.lostandfound.model.enums.Location;
 import com.example.lostandfound.repository.ItemRepository;
 import com.example.lostandfound.service.ItemService;
@@ -76,11 +77,16 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> searchItems(String keyword) {
-        return itemRepository.searchItems(keyword);  // Ensure repository has this method
+        return itemRepository.searchItems(keyword);  
     }
 
     @Override
     public List<Item> findItemsByLocation(Location location) {
-        return itemRepository.findByLocation(location); // Ensure repository has this method
+        return itemRepository.findByLocation(location); 
+    }
+
+    @Override
+    public List<Item> findItemsByCategory(Category category) {
+        return itemRepository.findItemsByCategory(category); 
     }
 }
