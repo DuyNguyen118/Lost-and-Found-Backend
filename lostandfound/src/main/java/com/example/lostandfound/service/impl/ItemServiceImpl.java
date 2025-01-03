@@ -1,14 +1,15 @@
 package com.example.lostandfound.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.lostandfound.model.Item;
 import com.example.lostandfound.model.enums.Category;
 import com.example.lostandfound.model.enums.Location;
 import com.example.lostandfound.repository.ItemRepository;
 import com.example.lostandfound.service.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -88,5 +89,15 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findItemsByCategory(Category category) {
         return itemRepository.findItemsByCategory(category); 
+    }
+
+    @Override
+    public void approveItem(Integer itemId) {
+        // Fetch the item and approve it
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found with ID: " + itemId));
+
+        item.setStatus("Approved");
+        itemRepository.save(item);
     }
 }

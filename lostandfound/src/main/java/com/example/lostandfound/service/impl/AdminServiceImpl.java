@@ -37,6 +37,11 @@ public class AdminServiceImpl implements AdminService {
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
+    
+    @Override
+    public List<Item> getPendingReturns() {
+        return itemRepository.findByStatus("Pending Return"); // Assuming pending items have a status of "Pending Return"
+    }
 
     @Override
     public void approveItemReturn(Integer itemId, Integer userId) {
@@ -58,10 +63,84 @@ public class AdminServiceImpl implements AdminService {
 
         // Log admin action
         AdminAction action = new AdminAction();
-        action.setAdminId((int) 1L); // Replace with the actual admin's ID in real use
+        action.setAdminId(1); // Replace with actual admin's ID
         action.setActionType("Approve Return");
         action.setActionDate(new Date());
         action.setDetails("Approved return for Item ID: " + itemId + " by User ID: " + userId);
+        logAdminAction(action);
+    }
+
+    @Override
+    public void deleteUser(Integer userId) {
+        // Fetch the user and delete
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+
+        userRepository.delete(user);
+
+        // Log admin action
+        AdminAction action = new AdminAction();
+        action.setAdminId(1); // Replace with actual admin's ID
+        action.setActionType("Delete User");
+        action.setActionDate(new Date());
+        action.setDetails("Deleted User ID: " + userId);
+        logAdminAction(action);
+    }
+
+    @Override
+    public void deleteItem(Integer itemId) {
+        // Fetch the item and delete
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found with ID: " + itemId));
+
+        itemRepository.delete(item);
+
+        // Log admin action
+        AdminAction action = new AdminAction();
+        action.setAdminId(1); // Replace with actual admin's ID
+        action.setActionType("Delete Item");
+        action.setActionDate(new Date());
+        action.setDetails("Deleted Item ID: " + itemId);
+        logAdminAction(action);
+    }
+
+    @Override
+    public void approveItem(Integer itemId) {
+        // Fetch the item and approve it
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found with ID: " + itemId));
+
+        item.setStatus("Approved");
+        itemRepository.save(item);
+
+        // Log admin action
+        AdminAction action = new AdminAction();
+        action.setAdminId(1); // Replace with actual admin's ID
+        action.setActionType("Approve Item");
+        action.setActionDate(new Date());
+        action.setDetails("Approved Item ID: " + itemId);
+        logAdminAction(action);
+    }
+
+    @Override
+    public void giveMeritPoints(Integer itemId, Integer userId) {
+        // Fetch the item and user
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found with ID: " + itemId));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+
+        // Award merit points
+        user.setMeritPoints(user.getMeritPoints() + 5); // Example merit point increment
+        userRepository.save(user);
+
+        // Log admin action
+        AdminAction action = new AdminAction();
+        action.setAdminId(1); // Replace with actual admin's ID
+        action.setActionType("Award Merit Points");
+        action.setActionDate(new Date());
+        action.setDetails("Awarded merit points for Item ID: " + itemId + " to User ID: " + userId);
         logAdminAction(action);
     }
 
@@ -70,4 +149,3 @@ public class AdminServiceImpl implements AdminService {
         return adminActionRepository.save(action);
     }
 }
-

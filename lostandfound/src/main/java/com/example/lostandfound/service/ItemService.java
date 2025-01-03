@@ -16,6 +16,7 @@ public interface ItemService {
     List<Item> getFoundItems();
     List<Item> searchItems(String keyword);
     List<Item> findItemsByLocation(Location location); 
-    List<Item> findItemsByCategory(Category category); 
+    List<Item> findItemsByCategory(Category category);
+    void approveItem(Integer itemId); 
 
 }
