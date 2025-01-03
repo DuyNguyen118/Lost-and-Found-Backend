@@ -14,12 +14,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Register a new user
-    @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        return userService.registerUser(user);
-    }
-
     // Get user details by ID
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id) {
