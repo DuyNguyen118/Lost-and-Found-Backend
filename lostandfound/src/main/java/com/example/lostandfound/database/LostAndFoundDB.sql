@@ -6,74 +6,74 @@ GO
 
 -- Users table
 CREATE TABLE Users (
-    UserId BIGINT PRIMARY KEY IDENTITY,
+    User_Id BIGINT PRIMARY KEY IDENTITY,
     Name NVARCHAR(100) NOT NULL,
     Password NVARCHAR(255) NOT NULL,
     Email NVARCHAR(100) NOT NULL UNIQUE,
-    StudentId NVARCHAR(50) NOT NULL UNIQUE,
+    Student_Id NVARCHAR(50) NOT NULL UNIQUE,
     Role NVARCHAR(50) NOT NULL,
-    MeritPoints INT DEFAULT 0
+    Merit_Points INT DEFAULT 0
 );
 
 -- Items table
 CREATE TABLE Items (
-    ItemId BIGINT PRIMARY KEY IDENTITY,
-    ItemName NVARCHAR(100) NOT NULL,
+    Item_Id BIGINT PRIMARY KEY IDENTITY,
+    Item_Name NVARCHAR(100) NOT NULL,
     Category NVARCHAR(50) NOT NULL,
     Description NVARCHAR(255),
     Status NVARCHAR(50) NOT NULL,
-    ReportDate DATETIME NOT NULL DEFAULT GETDATE(),
+    Report_Date DATETIME NOT NULL DEFAULT GETDATE(),
     Location NVARCHAR(50) NOT NULL,
     Room NVARCHAR(50),
-    ContactInfo NVARCHAR(100),
-    ReportedBy BIGINT NOT NULL FOREIGN KEY REFERENCES Users(UserId)
+    Contact_Info NVARCHAR(100),
+    Reported_By BIGINT NOT NULL FOREIGN KEY REFERENCES Users(User_Id)
 );
 
 -- Reports table
 CREATE TABLE Reports (
-    ReportId BIGINT PRIMARY KEY IDENTITY,
-    ReportType NVARCHAR(50) NOT NULL,
-    ReportDate DATETIME NOT NULL DEFAULT GETDATE(),
-    ItemId BIGINT NOT NULL FOREIGN KEY REFERENCES Items(ItemId),
-    UserId BIGINT NOT NULL FOREIGN KEY REFERENCES Users(UserId)
+    Report_Id BIGINT PRIMARY KEY IDENTITY,
+    Report_Type NVARCHAR(50) NOT NULL,
+    Report_Date DATETIME NOT NULL DEFAULT GETDATE(),
+    Item_Id BIGINT NOT NULL FOREIGN KEY REFERENCES Items(Item_Id),
+    User_Id BIGINT NOT NULL FOREIGN KEY REFERENCES Users(User_Id)
 );
 
--- AdminActions table
-CREATE TABLE AdminActions (
-    ActionId BIGINT PRIMARY KEY IDENTITY,
-    AdminId BIGINT NOT NULL FOREIGN KEY REFERENCES Users(UserId),
-    ActionType NVARCHAR(100) NOT NULL,
-    ActionDate DATETIME NOT NULL DEFAULT GETDATE(),
+-- Admin_Actions table
+CREATE TABLE Admin_Actions (
+    Action_Id BIGINT PRIMARY KEY IDENTITY,
+    Admin_Id BIGINT NOT NULL FOREIGN KEY REFERENCES Users(User_Id),
+    Action_Type NVARCHAR(100) NOT NULL,
+    Action_Date DATETIME NOT NULL DEFAULT GETDATE(),
     Details NVARCHAR(255)
 );
 
 -- Matches table
 CREATE TABLE Matches (
-    MatchId BIGINT PRIMARY KEY IDENTITY,
-    LostItemId BIGINT NOT NULL FOREIGN KEY REFERENCES Items(ItemId),
-    FoundItemId BIGINT NOT NULL FOREIGN KEY REFERENCES Items(ItemId),
-    MatchDate DATETIME NOT NULL DEFAULT GETDATE()
+    Match_Id BIGINT PRIMARY KEY IDENTITY,
+    Lost_Item_Id BIGINT NOT NULL FOREIGN KEY REFERENCES Items(Item_Id),
+    Found_Item_Id BIGINT NOT NULL FOREIGN KEY REFERENCES Items(Item_Id),
+    Match_Date DATETIME NOT NULL DEFAULT GETDATE()
 );
 
 -- Chats table
 CREATE TABLE Chats (
-    ChatId INT PRIMARY KEY IDENTITY,
-    UserId BIGINT NOT NULL FOREIGN KEY REFERENCES Users(UserId),
+    Chat_Id INT PRIMARY KEY IDENTITY,
+    User_Id BIGINT NOT NULL FOREIGN KEY REFERENCES Users(User_Id),
     Content NVARCHAR(MAX) NOT NULL,
-    IsSystemMessage BIT NOT NULL DEFAULT 0,
+    Is_System_Message BIT NOT NULL DEFAULT 0,
     Timestamp DATETIME NOT NULL DEFAULT GETDATE()
 );
 
 -- Insert sample data
 -- Insert Users
-INSERT INTO Users (Name, Password, Email, StudentId, Role, MeritPoints)
+INSERT INTO Users (Name, Password, Email, Student_Id, Role, Merit_Points)
 VALUES 
 ('Quyen', '123', 'quyenmai1912@gmail.com', 'ITCSIU23032', 'Admin', 50),
 ('Duy', '123', 'baoduy.song@gmail.com', 'ITCSIU23006', 'User', 55),
 ('VA', '123', 'anhoconnell@gmail.com', 'ITCSIU23050', 'User', 65);
 
 -- Insert Items
-INSERT INTO Items (ItemName, Category, Description, Status, ReportDate, Location, Room, ContactInfo, ReportedBy)
+INSERT INTO Items (Item_Name, Category, Description, Status, Report_Date, Location, Room, Contact_Info, Reported_By)
 VALUES 
 ('Blue Water Bottle', 'Accessories', 'Lost in library', 'Lost', GETDATE(), 'LIBRARY', '2nd floor', 'jane.smith@gmail.com', 2),
 ('Red Notebook', 'Stationery', 'Found in cafeteria', 'Found', GETDATE(), 'CANTEEN', 'Zero Coffee', 'admin@lostfound.com', 1),
@@ -87,7 +87,7 @@ VALUES
 ('Leather Bag', 'Clothing', 'Lost at parking area', 'Lost', GETDATE(), 'PARKING_AREA', 'Lot A1', 'mike.johnson@gmail.com', 3);
 
 -- Insert Reports
-INSERT INTO Reports (ReportType, ReportDate, ItemId, UserId)
+INSERT INTO Reports (Report_Type, Report_Date, Item_Id, User_Id)
 VALUES 
 ('Lost', GETDATE(), 1, 2),
 ('Found', GETDATE(), 2, 1),
@@ -95,20 +95,20 @@ VALUES
 ('Found', GETDATE(), 4, 1);
 
 -- Insert Admin Actions
-INSERT INTO AdminActions (AdminId, ActionType, ActionDate, Details)
+INSERT INTO Admin_Actions (Admin_Id, Action_Type, Action_Date, Details)
 VALUES 
-(1, 'ApproveItemReturn', GETDATE(), 'Approved the return of item 2 to user 2'),
-(1, 'BanUser', GETDATE(), 'Banned user 3 for spamming reports'),
-(1, 'UpdateItemStatus', GETDATE(), 'Updated status of item 4 to Returned');
+(1, 'Approve_Item_Return', GETDATE(), 'Approved the return of item 2 to user 2'),
+(1, 'Ban_User', GETDATE(), 'Banned user 3 for spamming reports'),
+(1, 'Update_Item_Status', GETDATE(), 'Updated status of item 4 to Returned');
 
 -- Insert Matches
-INSERT INTO Matches (LostItemId, FoundItemId, MatchDate)
+INSERT INTO Matches (Lost_Item_Id, Found_Item_Id, Match_Date)
 VALUES 
 (1, 2, GETDATE()),
 (3, 4, GETDATE());
 
 -- Insert Chats
-INSERT INTO Chats (UserId, Content, IsSystemMessage, Timestamp)
+INSERT INTO Chats (User_Id, Content, Is_System_Message, Timestamp)
 VALUES 
 (2, 'Hi, I lost my water bottle in the library.', 0, GETDATE()),
 (1, 'We found a blue water bottle in the campus library, 2nd floor.', 1, GETDATE()),
