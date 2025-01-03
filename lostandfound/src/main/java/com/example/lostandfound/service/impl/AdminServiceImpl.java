@@ -72,21 +72,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void deleteUser(Integer userId) {
-        // Fetch the user and delete
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-
+        System.out.println("User found: " + user);
         userRepository.delete(user);
-
-        // Log admin action
-        AdminAction action = new AdminAction();
-        action.setAdminId(1); // Replace with actual admin's ID
-        action.setActionType("Delete User");
-        action.setActionDate(new Date());
-        action.setDetails("Deleted User ID: " + userId);
-        logAdminAction(action);
     }
-
+    
     @Override
     public void deleteItem(Integer itemId) {
         // Fetch the item and delete
@@ -94,14 +85,6 @@ public class AdminServiceImpl implements AdminService {
                 .orElseThrow(() -> new RuntimeException("Item not found with ID: " + itemId));
 
         itemRepository.delete(item);
-
-        // Log admin action
-        AdminAction action = new AdminAction();
-        action.setAdminId(1); // Replace with actual admin's ID
-        action.setActionType("Delete Item");
-        action.setActionDate(new Date());
-        action.setDetails("Deleted Item ID: " + itemId);
-        logAdminAction(action);
     }
 
     @Override
@@ -113,13 +96,6 @@ public class AdminServiceImpl implements AdminService {
         item.setStatus("Approved");
         itemRepository.save(item);
 
-        // Log admin action
-        AdminAction action = new AdminAction();
-        action.setAdminId(1); // Replace with actual admin's ID
-        action.setActionType("Approve Item");
-        action.setActionDate(new Date());
-        action.setDetails("Approved Item ID: " + itemId);
-        logAdminAction(action);
     }
 
     @Override
