@@ -15,7 +15,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     // Find user by email (used for authentication or user verification)
     User findByEmail(String email);
-
+    Optional<User> findByStudentId(String studentId);
+    
     Optional<User> findByName(String username);
 
     // Find user by ID with a custom query

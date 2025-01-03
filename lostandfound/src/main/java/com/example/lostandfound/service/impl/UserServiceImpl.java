@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.lostandfound.dto.RegisterRequest;
 import com.example.lostandfound.model.User;
 import com.example.lostandfound.repository.UserRepository;
 import com.example.lostandfound.service.UserService;
@@ -16,7 +17,17 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User registerUser(User user) {
+    public User registerUser(RegisterRequest request) {
+        // Create a new User object from RegisterRequest
+        User user = new User();
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword()); // In production, remember to hash the password
+        user.setStudentId(request.getStudentId());
+        user.setRole("USER"); // Default role
+        user.setMeritPoints(0); // Default merit points
+
+        // Save the user to the database
         return userRepository.save(user);
     }
 
