@@ -80,10 +80,9 @@ public class AdminServiceImpl implements AdminService {
     
     @Override
     public void deleteItem(Integer itemId) {
-        // Fetch the item and delete
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found with ID: " + itemId));
-
+        System.out.println("Item found: " + item);
         itemRepository.delete(item);
     }
 
@@ -103,21 +102,14 @@ public class AdminServiceImpl implements AdminService {
         // Fetch the item and user
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found with ID: " + itemId));
-
+                System.out.println("Item found: " + item);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-
+                System.out.println("User found: " + user);
         // Award merit points
         user.setMeritPoints(user.getMeritPoints() + 5); // Example merit point increment
         userRepository.save(user);
 
-        // Log admin action
-        AdminAction action = new AdminAction();
-        action.setAdminId(1); // Replace with actual admin's ID
-        action.setActionType("Award Merit Points");
-        action.setActionDate(new Date());
-        action.setDetails("Awarded merit points for Item ID: " + itemId + " to User ID: " + userId);
-        logAdminAction(action);
     }
 
     @Override

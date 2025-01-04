@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.lostandfound.model.AdminAction;
 import com.example.lostandfound.model.Item;
 import com.example.lostandfound.model.User;
 import com.example.lostandfound.service.AdminService;
@@ -50,46 +48,56 @@ public class AdminController {
 
     // Approve a return and update merit points
     @PostMapping("/approveReturn")
-    public String approveItemReturn(@RequestParam Integer itemId, @RequestParam Integer userId) {
-        adminService.approveItemReturn(itemId, userId);
-        return "Item return approved, merit points updated.";
+    public ResponseEntity<String> approveItemReturn(@RequestParam Integer itemId, @RequestParam Integer userId) {
+        try {
+            adminService.approveItemReturn(itemId, userId);
+            return ResponseEntity.ok("Item return approved, merit points updated.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        }
     }
 
     // Delete a user
     @DeleteMapping("/users/{userId}")
-public ResponseEntity<String> deleteUser(@PathVariable Integer userId) {
-    try {
-        adminService.deleteUser(userId);
-        return ResponseEntity.ok("User deleted successfully");
-    } catch (RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+    public ResponseEntity<String> deleteUser(@PathVariable Integer userId) {
+        try {
+            adminService.deleteUser(userId);
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        }
     }
-}
 
     // Delete an item
     @DeleteMapping("/items/{itemId}")
-    public String deleteItem(@RequestParam Integer itemId) {
-        adminService.deleteItem(itemId);
-        return "Item deleted successfully";
+    public ResponseEntity<String> deleteItem(@PathVariable Integer itemId) {
+        try {
+            adminService.deleteItem(itemId);
+            return ResponseEntity.ok("Item deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        }
     }
 
     // Approve an item
-    @PostMapping("/approveItem")
-    public String approveItem(@RequestParam Integer itemId) {
-        adminService.approveItem(itemId);
-        return "Item approved successfully";
+    @PostMapping("/approveItem/{itemId}")
+    public ResponseEntity<String> approveItem(@RequestParam Integer itemId) {
+        try {
+            adminService.approveItem(itemId);
+            return ResponseEntity.ok("Item approved successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        }
     }
 
     // Award merit points
-    @PostMapping("/meritPoints")
-    public String giveMeritPoints(@RequestParam Integer itemId, @RequestParam Integer userId) {
-        adminService.giveMeritPoints(itemId, userId);
-        return "Merit points awarded successfully";
-    }
-
-    // Log an admin action
-    @PostMapping("/logAction")
-    public AdminAction logAdminAction(@RequestBody AdminAction action) {
-        return adminService.logAdminAction(action);
+    @PostMapping("/meritPoints/{itemId}/{userId}")
+    public ResponseEntity<String> giveMeritPoints(@RequestParam Integer itemId, @RequestParam Integer userId) {
+        try {
+            adminService.giveMeritPoints(itemId, userId);
+            return ResponseEntity.ok("Merit points awarded successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        }
     }
 }
