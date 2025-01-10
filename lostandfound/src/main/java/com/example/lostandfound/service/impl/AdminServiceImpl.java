@@ -3,20 +3,30 @@ package com.example.lostandfound.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.lostandfound.model.AdminAction;
 import com.example.lostandfound.model.Item;
 import com.example.lostandfound.model.User;
 import com.example.lostandfound.repository.AdminActionRepository;
+import com.example.lostandfound.repository.ChatRepository;
 import com.example.lostandfound.repository.ItemRepository;
 import com.example.lostandfound.repository.UserRepository;
 import com.example.lostandfound.service.AdminService;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class AdminServiceImpl implements AdminService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private ChatRepository chatRepository;
+
     private final ItemRepository itemRepository;
     private final AdminActionRepository adminActionRepository;
 
@@ -73,8 +83,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteUser(Integer userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-        System.out.println("User found: " + user);
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        // First delete all associated chat messages
+        chatRepository.deleteByUser(user);
+        
+        // Then delete the user
         userRepository.delete(user);
     }
     
