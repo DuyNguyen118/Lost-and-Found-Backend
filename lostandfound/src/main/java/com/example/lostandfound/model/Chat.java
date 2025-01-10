@@ -3,6 +3,9 @@ package com.example.lostandfound.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +25,8 @@ public class Chat {
 
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
-    private User user;  // User associated with this chat
+    @OnDelete(action = OnDeleteAction.CASCADE)  // Add this annotation
+    private User user;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(MAX)")
     private String content;
