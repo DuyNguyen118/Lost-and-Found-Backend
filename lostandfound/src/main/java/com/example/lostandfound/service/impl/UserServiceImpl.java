@@ -3,6 +3,7 @@ package com.example.lostandfound.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.example.lostandfound.dto.RegisterRequest;
@@ -47,7 +48,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Integer id) {
-        userRepository.deleteById(id);
+        try {
+            if (!userRepository.existsById(id)) {
+                throw new RuntimeException("User not found with id: " + id);
+            }
+            userRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Cannot delete user due to existing references. Please delete associated records first.", e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error deleting user: " + e.getMessage(), e);
+        }
     }
 
     @Override
