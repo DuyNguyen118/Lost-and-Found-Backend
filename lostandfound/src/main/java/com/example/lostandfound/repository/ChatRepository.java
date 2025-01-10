@@ -8,9 +8,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.lostandfound.model.Chat;
+import com.example.lostandfound.model.User;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Integer> {
+
+    List<Chat> findByUser(User user);
+    void deleteByUser(User user);
 
     // Find all chats for a specific user
     @Query("SELECT c FROM Chat c WHERE c.user.userId = :userId ORDER BY c.timestamp ASC")
