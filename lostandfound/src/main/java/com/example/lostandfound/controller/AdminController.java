@@ -18,9 +18,9 @@ import com.example.lostandfound.model.Item;
 import com.example.lostandfound.model.User;
 import com.example.lostandfound.service.AdminService;
 
-@CrossOrigin(origins = "http://localhost:5000/AdminPage/Admin_UI.html")
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin(origins = "http://localhost:5000")
 public class AdminController {
 
     @Autowired
