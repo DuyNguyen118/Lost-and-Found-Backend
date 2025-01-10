@@ -66,9 +66,9 @@ public class AdminController {
     public ResponseEntity<String> deleteUser(@PathVariable Integer userId) {
         try {
             adminService.deleteUser(userId);
-            return ResponseEntity.ok("User deleted successfully");
+            return ResponseEntity.ok("User with ID " + userId + " deleted successfully.");
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
         }
     }
 
