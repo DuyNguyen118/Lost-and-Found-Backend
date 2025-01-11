@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.lostandfound.model.Item;
 import com.example.lostandfound.model.User;
 import com.example.lostandfound.service.AdminService;
-import com.example.lostandfound.service.UserService;
 
 
 @RestController
@@ -27,10 +26,6 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
-
-    @Autowired
-    private UserService userService;
-    //private ItemService itemService;
 
     // Get all users
     @GetMapping("/users")
